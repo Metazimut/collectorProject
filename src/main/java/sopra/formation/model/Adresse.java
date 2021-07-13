@@ -31,8 +31,8 @@ public class Adresse {
 	private String pays;
 	
 	@ManyToOne
-	@JoinColumn(name = "client_id")
-	private Client client;
+	@JoinColumn(name = "compte_id")
+	private Compte compte;
 
 	public Adresse() {
 		super();
@@ -118,13 +118,13 @@ public class Adresse {
 	}
 
 
-	public Client getClient() {
-		return client;
+	public Compte getCompte() {
+		return compte;
 	}
 
 
-	public void setClient(Client client) {
-		this.client = client;
+	public void setCompte(Compte compte) {
+		this.compte = compte;
 	}
 
 
