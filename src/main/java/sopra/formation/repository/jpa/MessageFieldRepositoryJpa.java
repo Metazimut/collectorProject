@@ -8,14 +8,14 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.TypedQuery;
 
 import sopra.formation.Application;
-import sopra.formation.model.Message;
-import sopra.formation.repository.IMessageRepository;
+import sopra.formation.model.MessageField;
+import sopra.formation.repository.IMessageFieldRepository;
 
-public class MessageRepositoryJpa implements IMessageRepository {
+public class MessageFieldRepositoryJpa implements IMessageFieldRepository {
 
 	@Override
-	public List<Message> findAll() {
-		List<Message> messages = new ArrayList<Message>();
+	public List<MessageField> findAll() {
+		List<MessageField> messages = new ArrayList<MessageField>();
 
 		EntityManager em = null;
 		EntityTransaction tx = null;
@@ -25,7 +25,7 @@ public class MessageRepositoryJpa implements IMessageRepository {
 			tx = em.getTransaction();
 			tx.begin();
 
-			TypedQuery<Message> query = em.createQuery("select m from Message m", Message.class);
+			TypedQuery<MessageField> query = em.createQuery("select m from Message m", MessageField.class);
 
 			messages = query.getResultList();
 
@@ -46,8 +46,8 @@ public class MessageRepositoryJpa implements IMessageRepository {
 	}
 
 	@Override
-	public Message findById(Long id) {
-		Message message = null;
+	public MessageField findById(Long id) {
+		MessageField message = null;
 
 		EntityManager em = null;
 		EntityTransaction tx = null;
@@ -57,7 +57,7 @@ public class MessageRepositoryJpa implements IMessageRepository {
 			tx = em.getTransaction();
 			tx.begin();
 
-			message = em.find(Message.class, id);
+			message = em.find(MessageField.class, id);
 
 			tx.commit();
 		} catch (Exception e) {
@@ -76,7 +76,7 @@ public class MessageRepositoryJpa implements IMessageRepository {
 	}
 
 	@Override
-	public Message save(Message obj) {
+	public MessageField save(MessageField obj) {
 		EntityManager em = null;
 		EntityTransaction tx = null;
 
@@ -103,7 +103,7 @@ public class MessageRepositoryJpa implements IMessageRepository {
 		return obj;
 	}
 	@Override
-	public void delete(Message obj) {
+	public void delete(MessageField obj) {
 		EntityManager em = null;
 		EntityTransaction tx = null;
 

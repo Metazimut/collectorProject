@@ -10,11 +10,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Version;
 
 
 @Entity
-@DiscriminatorValue("Field")
+@Table(name = "Field")
 public class Field {
 
 	@Id
@@ -31,14 +32,14 @@ public class Field {
 	private String Auteur ;
 
 	@OneToMany(mappedBy = "field")
-	private List<Message> messages = new ArrayList<Message>();
+	private List<MessageField> messages = new ArrayList<MessageField>();
 
 
 	public Field() {
 		super();
 	}
 
-	public Field(Long id, String categorie, String auteur, List<Message> messages) {
+	public Field(Long id, String categorie, String auteur, List<MessageField> messages) {
 		super();
 		this.id = id;
 		this.categorie = categorie;
@@ -77,12 +78,12 @@ public class Field {
 	}
 
 
-	public List<Message> getMessages() {
+	public List<MessageField> getMessages() {
 		return messages;
 	}
 
 
-	public void setMessages(List<Message> messages) {
+	public void setMessages(List<MessageField> messages) {
 		this.messages = messages;
 	}
 
