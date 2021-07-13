@@ -17,17 +17,17 @@ public class Utilisateur extends Compte {
 	@Column(name = "firstName")
 	private MoyenPaiement moyenPaiement;
 	
-//	@OneToMany(mappedBy = "auteur")
-//	private List<Field> fields = new ArrayList<Field>();
+	@OneToMany(mappedBy = "auteur")
+	private List<Field> fields = new ArrayList<Field>();
 	
-//	@OneToMany(mappedBy = "utilisateur")
-//	private List<Commentaire> commentaires = new ArrayList<Commentaire>();
+	@OneToMany(mappedBy = "utilisateur")
+	private List<Commentaire> commentaires = new ArrayList<Commentaire>();
 	
-//	@OneToMany(mappedBy = "publicateur")
-//	private List<Publication> publications = new ArrayList<Publication>();
+	@OneToMany(mappedBy = "publicateur")
+	private List<Publication> publications = new ArrayList<Publication>();
 	
-//	@OneToMany(mappedBy = "utilisateur")
-//	private List<ParticipationEnchere> encheres = new ArrayList<ParticipationEnchere>();
+	@OneToMany(mappedBy = "utilisateur")
+	private List<ParticipationEnchere> encheres = new ArrayList<ParticipationEnchere>();
 	
 	@OneToMany(mappedBy = "envoyeur")
 	private List<Message> envoi = new ArrayList<Message>();	
