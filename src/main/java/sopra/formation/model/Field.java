@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,7 +20,7 @@ import javax.persistence.Version;
 public class Field {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
 	@Version
@@ -29,7 +30,8 @@ public class Field {
 	private String categorie;
 
 	@ManyToOne
-	private String Auteur ;
+	@JoinColumn(name = "auteur_id")
+	private Utilisateur auteur ;
 
 	@OneToMany(mappedBy = "field")
 	private List<MessageField> messages = new ArrayList<MessageField>();
@@ -39,11 +41,11 @@ public class Field {
 		super();
 	}
 
-	public Field(Long id, String categorie, String auteur, List<MessageField> messages) {
+	public Field(Long id, String categorie, Utilisateur auteur, List<MessageField> messages) {
 		super();
 		this.id = id;
 		this.categorie = categorie;
-		Auteur = auteur;
+		this.auteur = auteur;
 		this.messages = messages;
 	}
 
@@ -67,16 +69,13 @@ public class Field {
 		this.categorie = categorie;
 	}
 
-
-	public String getAuteur() {
-		return Auteur;
+	public Utilisateur getAuteur() {
+		return auteur;
 	}
 
-
-	public void setAuteur(String auteur) {
-		Auteur = auteur;
+	public void setAuteur(Utilisateur auteur) {
+		this.auteur = auteur;
 	}
-
 
 	public List<MessageField> getMessages() {
 		return messages;
