@@ -12,10 +12,7 @@ public class TestJPAWithRepo {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(Application.class);
 
 		IMessageRepository messageRepo = context.getBean(IMessageRepository.class);
-//
-//		Matiere html = new Matiere("HTML", 2);
-//
-//		html = matiereRepo.save(html);
+
 
 		Message message1 = new Message();
 		message1.setMessageTxt("lol");
