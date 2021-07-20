@@ -3,6 +3,7 @@ package sopra.formation.model;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,55 +16,26 @@ import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
 @Entity
-@Table(name = "message")
-public class Message {
+@Table(name = "Commentaire")
+public class Commentaire {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	@Version
-	private int version;
+    private int version;
 	
-	@Column(name = "messageTxt")
-	private String messageTxt;
+	@Column(name = "message")
+	private String message;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "creationDate")
 	private Date dateCreation;
 	
 	@ManyToOne
-	@JoinColumn(name = "envoyeur_id")
-	private Utilisateur envoyeur;
+	@JoinColumn(name = "utilisateur_id")
+	private Utilisateur utilisateur ;
 	
 	@ManyToOne
-	@JoinColumn(name = "recepteur_id")
-	private Utilisateur recepteur;
-
-	public Message() {
-		super();
-	}
-
-
-	public Long getId() {
-		return id;
-	}
-
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-
-	public int getVersion() {
-		return version;
-	}
-
-
-	public void setVersion(int version) {
-		this.version = version;
-	}
-
-
-	
-
-	
+	@JoinColumn(name = "publication_id")
+	private Publication publication ;
 }
