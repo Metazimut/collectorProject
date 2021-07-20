@@ -63,6 +63,53 @@ public class Message {
 	}
 
 
+	public String getMessageTxt() {
+		return messageTxt;
+	}
+
+
+	public void setMessageTxt(String messageTxt) {
+		this.messageTxt = messageTxt;
+	}
+
+
+	public Date getDateCreation() {
+		return dateCreation;
+	}
+
+
+	public void setDateCreation(Date dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+
+	public Utilisateur getEnvoyeur() {
+		return envoyeur;
+	}
+
+
+	public void setEnvoyeur(Utilisateur envoyeur) {
+		this.envoyeur = envoyeur;
+	}
+
+
+	public Utilisateur getRecepteur() {
+		return recepteur;
+	}
+
+
+	public void setRecepteur(Utilisateur recepteur) {
+		this.recepteur = recepteur;
+	}
+
+
+	@Override
+	public String toString() {
+		return "Message [id=" + id + ", version=" + version + ", messageTxt=" + messageTxt + ", dateCreation="
+				+ dateCreation + ", envoyeur=" + envoyeur + ", recepteur=" + recepteur + "]";
+	}
+
+
 	
 
 	

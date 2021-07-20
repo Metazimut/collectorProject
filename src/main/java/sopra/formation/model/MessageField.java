@@ -43,6 +43,52 @@ public class MessageField {
 		this.message = message;
 		this.field = field;
 	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public LocalDate getDateCreation() {
+		return dateCreation;
+	}
+
+	public void setDateCreation(LocalDate dateCreation) {
+		this.dateCreation = dateCreation;
+	}
+
+	public Field getField() {
+		return field;
+	}
+
+	public void setField(Field field) {
+		this.field = field;
+	}
+
+	@Override
+	public String toString() {
+		return "MessageField [id=" + id + ", version=" + version + ", message=" + message + ", dateCreation="
+				+ dateCreation + ", field=" + field + "]";
+	}
 	
 	
 }

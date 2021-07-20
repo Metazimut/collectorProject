@@ -1,95 +1,85 @@
 package sopra.formation;
 
+import java.util.Properties;
+
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
-import sopra.formation.repository.IAdresseRepository;
-import sopra.formation.repository.ICategorieRepository;
-import sopra.formation.repository.ICommentaireRepository;
-import sopra.formation.repository.ICompteRepository;
-import sopra.formation.repository.IFieldRepository;
-import sopra.formation.repository.IMessageFieldRepository;
-import sopra.formation.repository.IMessageRepository;
-import sopra.formation.repository.IParticipationEnchereRepository;
-import sopra.formation.repository.IPublicationRepository;
-import sopra.formation.repository.jpa.AdresseRepositoryJpa;
-import sopra.formation.repository.jpa.CategorieRepositoryJpa;
-import sopra.formation.repository.jpa.CommentaireRepositoryJpa;
-import sopra.formation.repository.jpa.CompteRepositoryJpa;
-import sopra.formation.repository.jpa.FieldRepositoryJpa;
-import sopra.formation.repository.jpa.MessageFieldRepositoryJpa;
-import sopra.formation.repository.jpa.MessageRepositoryJpa;
-import sopra.formation.repository.jpa.ParticipationEnchereRepositoryJpa;
-import sopra.formation.repository.jpa.PublicationRepositoryJpa;
+import org.apache.commons.dbcp2.BasicDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
+import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.JpaVendorAdapter;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-
+@Configuration
+// On active les annotations @Transactional avec transactionManager
+@EnableTransactionManagement
+// Indiquer dans quel paquetage scanner pour trouver des annotations (activation implicite)
+@ComponentScan("sopra.formation.repository")
+// Chargement du fichier db.properties en mémoire
+@PropertySource("classpath:db.properties")
+// Scan des JpaRepository
+@EnableJpaRepositories(basePackages = "sopra.formation.repository", repositoryImplementationPostfix = "CustomImpl")
 public class Application {
-	private static Application instance = null;
 
-	private final EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("formation-jpa");
-	private final ICategorieRepository categorieRepo = new CategorieRepositoryJpa();
-	private final IParticipationEnchereRepository participationEnchereRepo = new ParticipationEnchereRepositoryJpa();
-	private final IPublicationRepository publicationRepo = new PublicationRepositoryJpa();
-	private final IMessageRepository MessageRepo = new MessageRepositoryJpa();
-	private final ICompteRepository CompteRepo = new CompteRepositoryJpa();
-	private final IAdresseRepository AdresseRepo = new AdresseRepositoryJpa();
-	private final IMessageFieldRepository MessageFieldRepo = new MessageFieldRepositoryJpa();
-	private final ICommentaireRepository CommentaireRepo = new CommentaireRepositoryJpa();
-	private final IFieldRepository FieldRepo = new FieldRepositoryJpa();
+	@Autowired
+	private Environment env;
 
+//	On crée la dataSource via dbcp2
+	@Bean
+	public BasicDataSource dataSource() {
+		BasicDataSource dataSource = new BasicDataSource();
+		dataSource.setDriverClassName(env.getProperty("db.driver"));
+		dataSource.setUrl(env.getProperty("db.url"));
+		dataSource.setUsername(env.getProperty("db.user"));
+		dataSource.setPassword(env.getProperty("db.password"));
+		dataSource.setMaxTotal(Integer.valueOf(env.getProperty("db.maxTotal")));
 
-	private Application() {
+		return dataSource;
 	}
 
-	public static Application getInstance() {
-		if (instance == null) {
-			instance = new Application();
-		}
+//	On crée un entityManagerFactory local à partir de la dataSource
+	@Bean
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(BasicDataSource dataSource) {
+		LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+		emf.setDataSource(dataSource);
+		emf.setPackagesToScan("sopra.formation.model");
+//		On précise le provider (Hibernate) ...
+		JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+		emf.setJpaVendorAdapter(vendorAdapter);
+		emf.setJpaProperties(this.hibernateProperties());
 
-		return instance;
+		return emf;
 	}
 
-	public EntityManagerFactory getEntityManagerFactory() {
-		return entityManagerFactory;
+//	On précise les propriétés du provider (Hibernate) ...
+	private Properties hibernateProperties() {
+		Properties properties = new Properties();
+		properties.setProperty("hibernate.hbm2ddl.auto", "update");
+		properties.setProperty("hibernate.dialect", env.getProperty("db.dialect"));
+		properties.setProperty("hibernate.show_sql", "true");
+		return properties;
 	}
 
-	public ICategorieRepository getCategorieRepo() {
-		return categorieRepo;
+//	On crée le transactionManagerpour JPA avec entityManagerFactory
+	@Bean
+	public JpaTransactionManager transactionManager(EntityManagerFactory emf) {
+		JpaTransactionManager transactionManager = new JpaTransactionManager();
+		transactionManager.setEntityManagerFactory(emf);
+		return transactionManager;
 	}
 
-	public IParticipationEnchereRepository getParticipationEnchereRepo() {
-		return participationEnchereRepo;
+	@Bean
+//	On active la translation d'exception (Exception interne (Repo) => DataAccessException)
+	public PersistenceExceptionTranslationPostProcessor exceptionTranslation() {
+		return new PersistenceExceptionTranslationPostProcessor();
 	}
-
-	public IPublicationRepository getPublicationRepo() {
-		return publicationRepo;
-	}
-	
-
-	public IMessageRepository getMessageRepo() {
-		return MessageRepo;
-	}
-
-	public ICompteRepository getCompteRepo() {
-		return CompteRepo;
-	}
-
-	public IAdresseRepository getAdresseRepo() {
-		return AdresseRepo;
-	}
-
-	public IMessageFieldRepository getMessageFieldRepo() {
-		return MessageFieldRepo;
-	}
-
-	public ICommentaireRepository getCommentaireRepo() {
-		return CommentaireRepo;
-	}
-
-	public IFieldRepository getFieldRepo() {
-		return FieldRepo;
-	}
-
-	
-	
 }
