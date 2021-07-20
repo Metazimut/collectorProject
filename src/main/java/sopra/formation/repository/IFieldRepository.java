@@ -1,7 +1,7 @@
 package sopra.formation.repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import sopra.formation.model.Field;
 
-import com.sun.jdi.Field;
-
-public interface IFieldRepository extends IRepository<Field, Long> {
+public interface IFieldRepository extends JpaRepository<Field, Long> {
 
 }
