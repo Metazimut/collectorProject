@@ -50,6 +50,14 @@ public class Field {
 	}
 
 
+	public int getVersion() {
+		return version;
+	}
+
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	public Long getId() {
 		return id;
 	}
@@ -84,6 +92,12 @@ public class Field {
 
 	public void setMessages(List<MessageField> messages) {
 		this.messages = messages;
+	}
+
+	@Override
+	public String toString() {
+		return "Field [id=" + id + ", version=" + version + ", categorie=" + categorie + ", auteur=" + auteur
+				+ ", messages=" + messages + "]";
 	}
 
 
