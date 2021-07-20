@@ -16,9 +16,9 @@ public interface ICompteRepository extends JpaRepository<Compte, Long> {
 	Utilisateur findByPublications(Publication publication);
 	Utilisateur findByCommentaires(Commentaire commentaire);
 	
-	@Query("select c from Compte c where c.adresses.ville = :ville and c.adresses.pays = :pays")
+	@Query("select c from Compte c join Adresse a where a.ville = :ville and a.pays = :pays")
 	List<Compte> findAllByVille(@Param("ville") String ville, @Param("pays") String pays);
 	
-	@Query("select c from Compte c where c.adresses.codePostal = :codePostal and c.adresses.pays = :pays")
+	@Query("select c from Compte c join Adresse a where a.codePostal = :codePostal and a.pays = :pays")
 	List<Compte> findAllByCodePostal(@Param("codePostal") String codePostal, @Param("pays") String pays);
 }
