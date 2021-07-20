@@ -7,5 +7,5 @@ import sopra.formation.model.Field;
 import sopra.formation.model.MessageField;
 
 public interface IMessageFieldRepository extends JpaRepository<MessageField, Long>{
-	List<MessageField> findByField(Field field);
+	List<MessageField> findAllByField(Field field);
 }

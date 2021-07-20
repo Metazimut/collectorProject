@@ -7,6 +7,6 @@ import sopra.formation.model.Publication;
 import sopra.formation.model.Utilisateur;
 
 public interface ICommentaireRepository extends JpaRepository<Commentaire, Long> {
-	List<Commentaire> findByUtilisateur(Utilisateur utilisateur);
-	List<Commentaire> findByPublication(Publication publication);
+	List<Commentaire> findAllByUtilisateur(Utilisateur utilisateur);
+	List<Commentaire> findAllByPublication(Publication publication);
 }
