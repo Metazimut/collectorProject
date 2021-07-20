@@ -26,7 +26,7 @@ public class Message {
 	@Column(name = "messageTxt")
 	private String messageTxt;
 	
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "creationDate")
 	private Date dateCreation;
 	
