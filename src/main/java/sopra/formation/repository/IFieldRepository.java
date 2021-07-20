@@ -6,5 +6,5 @@ import sopra.formation.model.Field;
 import sopra.formation.model.Utilisateur;
 
 public interface IFieldRepository extends JpaRepository<Field, Long> {
-	List<Field> findByAuteur(Utilisateur auteur);
+	List<Field> findAllByAuteur(Utilisateur auteur);
 }
