@@ -18,10 +18,11 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-
+import sopra.formation.model.Publication;
 import sopra.formation.model.Utilisateur;
 import sopra.formation.model.Views;
 import sopra.formation.repository.ICompteRepository;
+import sopra.formation.repository.IPublicationRepository;
 
 
 @RestController
@@ -30,6 +31,9 @@ import sopra.formation.repository.ICompteRepository;
 public class UtilisateurRestController {
 	@Autowired
 	private ICompteRepository utilisateurRepo;
+	
+	@Autowired
+	private IPublicationRepository publicationRepo;
 
 	@GetMapping("")
 	@JsonView(Views.ViewUtilisateur.class)
@@ -49,6 +53,12 @@ public class UtilisateurRestController {
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 		}
+	}
+	
+	@GetMapping("/{id}/all-publications")
+	@JsonView(Views.ViewUtilisateurPublications.class)
+	public List<Publication> findAllPublication(@PathVariable Long id) {
+		return publicationRepo.findAllPublicationByPublicateur(id);
 	}
 	
 

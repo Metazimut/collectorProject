@@ -48,6 +48,13 @@ public class ParticipationEnchereRestController {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 		}
 	}
+	
+	@GetMapping("/utilisateur/{utilisateurId}/publication/{publicationId}")
+	@JsonView(Views.ViewParticipationEnchere.class)
+	public List<ParticipationEnchere> findEncheresWithUtilisateurAndPublication(@PathVariable Long utilisateurId, @PathVariable Long publicationId) {
+			return  participationRepo.findAllEncheresByPublicationAndUtilisateur(publicationId, utilisateurId);
+		
+	}
 
 	@PostMapping("")
 	public ParticipationEnchere create(@RequestBody ParticipationEnchere participation) {
