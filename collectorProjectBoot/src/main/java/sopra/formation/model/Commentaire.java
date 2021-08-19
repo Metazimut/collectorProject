@@ -14,6 +14,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "Commentaire")
 public class Commentaire {
@@ -28,6 +30,7 @@ public class Commentaire {
 	private String message;
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date dateCreation;
 	
 	@ManyToOne
