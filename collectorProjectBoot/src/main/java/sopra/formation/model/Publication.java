@@ -17,32 +17,44 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 @Table(name = "publication")
 public class Publication {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.ViewCommon.class)
 	private Long id;
 	@Version
+	@JsonView(Views.ViewCommon.class)
 	private int version;
 	@Column(name = "nom")
+	@JsonView(Views.ViewCommon.class)
 	private String nom;
 	@Column(name = "description")
+	@JsonView(Views.ViewCommon.class)
 	private String description;
 	@Column(name = "img")
+	@JsonView(Views.ViewCommon.class)
 	private String img;
 	@Column(name = "prixDepart")
+	@JsonView(Views.ViewCommon.class)
 	private Long prixDepart;
 	@Column(name = "prixActuel")
+	@JsonView(Views.ViewCommon.class)
 	private Long prixActuel;
 	@Column(name = "duree")
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonView(Views.ViewCommon.class)
 	private Date duree;
 	@ManyToOne
 	@JoinColumn(name = "publicateur_id")
+	@JsonView(Views.ViewPublication.class)
 	private Utilisateur publicateur;
 	@ManyToOne
 	@JoinColumn(name = "categorie_id")
+	@JsonView(Views.ViewPublication.class)
 	private Categorie categorie;
 	@OneToMany(mappedBy = "publication")
 	private List<ParticipationEnchere> encheres = new ArrayList<ParticipationEnchere>();

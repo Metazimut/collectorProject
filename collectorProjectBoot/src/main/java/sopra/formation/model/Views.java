@@ -12,5 +12,9 @@ public class Views {
 	public static class ViewUtilisateur extends ViewCompte {}
 	
 	public static class ViewAdresse extends ViewCommon {}
-}
 
+
+	public static class ViewPublication extends ViewCommon {}
+	public static class ViewParticipationEnchere extends ViewCommon {}
+	public static class ViewCategorie extends ViewCommon {}
+}
