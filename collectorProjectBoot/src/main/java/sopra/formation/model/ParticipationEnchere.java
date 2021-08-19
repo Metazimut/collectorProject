@@ -10,23 +10,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 @Table(name = "participatienEnchere")
 public class ParticipationEnchere {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.ViewCommon.class)
 	private Long id;
 	@Version
+	@JsonView(Views.ViewCommon.class)
 	private int version;
 	@Column(name = "prixProposition")
+	@JsonView(Views.ViewCommon.class)
 	private Long prixProposition;
 	@Column(name = "placeNb")
+	@JsonView(Views.ViewCommon.class)
 	private int placeNb;
 	@ManyToOne
 	@JoinColumn(name = "utilisateur_id")
+	@JsonView(Views.ViewParticipationEnchere.class)
 	private Utilisateur utilisateur;
 	@ManyToOne
 	@JoinColumn(name = "publication_id")
+	@JsonView(Views.ViewParticipationEnchere.class)
 	private Publication publication;
 	
 	public ParticipationEnchere() {
