@@ -18,6 +18,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 @Table(name = "compte")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
@@ -25,33 +27,43 @@ import javax.persistence.Version;
 public abstract class Compte {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.ViewCommon.class)
 	private Long id;
 	@Version
+	@JsonView(Views.ViewCommon.class)
 	private int version;
 	
 	@Column(name = "lastName")
+	@JsonView(Views.ViewCommon.class)
 	private String nom;
 	
 	@Column(name = "firstName")
+	@JsonView(Views.ViewCommon.class)
 	private String prenom;
 	
 	@Column(name = "email")
+	@JsonView(Views.ViewCommon.class)
 	private String email;
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "creationDate")
+	@JsonView(Views.ViewCommon.class)
 	private Date dateCreation;
 	
 	@Column(name = "username ")
+	@JsonView(Views.ViewCommon.class)
 	private String identifiant;
 	
 	@Column(name = "password")
+	@JsonView(Views.ViewCommon.class)
 	private String mdp;
 	
 	@Column(name = "profilImg")
+	@JsonView(Views.ViewCommon.class)
 	private String profilImg;
 	
 	@Column(name = "pseudo")
+	@JsonView(Views.ViewCommon.class)
 	private String pseudo;
 
 	@OneToMany(mappedBy = "compte")

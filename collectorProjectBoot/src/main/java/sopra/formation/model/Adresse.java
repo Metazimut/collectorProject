@@ -10,28 +10,37 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 @Table(name = "adress")
 public class Adresse {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.ViewCommon.class)
 	private Long id;
 	@Version
+	@JsonView(Views.ViewCommon.class)
 	private int version;
-	
 	@Column(name="street", length = 255)
+	@JsonView(Views.ViewCommon.class)
 	private String rue;
 	@Column(name="addtionnal_details", length = 255)
+	@JsonView(Views.ViewCommon.class)
 	private String complement;
 	@Column(name="zipcode", length = 10)
+	@JsonView(Views.ViewCommon.class)
 	private String codePostal;
 	@Column(name="city", length = 255)
+	@JsonView(Views.ViewCommon.class)
 	private String ville;
 	@Column(name="country", length = 255)
+	@JsonView(Views.ViewCommon.class)
 	private String pays;
 	
 	@ManyToOne
 	@JoinColumn(name = "compte_id")
+	@JsonView(Views.ViewAdresse.class)
 	private Compte compte;
 
 	public Adresse() {
