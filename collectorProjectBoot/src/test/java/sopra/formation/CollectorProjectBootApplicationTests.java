@@ -34,104 +34,15 @@ class CollectorProjectBootApplicationTests {
 	@Autowired
 	private IAdresseRepository adresseRepo;
 
-
-//	@Test
-//	public void findAllByCategorie() {
-//		System.out.println("testFindAllByCategorie Début ###################");
-//
-//		Categorie cat1 = new Categorie();
-//		cat1.setCategorieNom("Console");;
-//		cat1 = categorieRepo.save(cat1);
-//
-//		Categorie cat2 = new Categorie();
-//		cat2.setCategorieNom("Carte");
-//		cat2 = categorieRepo.save(cat2);
-//
-//		int sizeStart = publicationRepo.findAllByCategorie(cat1).size();
-//
-//		Publication pub1 = new Publication();
-//		pub1.setNom("pub1");
-//		pub1.setCategorie(cat1);
-//
-//		pub1 = publicationRepo.save(pub1);
-//
-//
-//		Publication pub2 = new Publication();
-//		pub2.setNom("pub2");
-//		pub2.setCategorie(cat2);
-//
-//		pub2 = publicationRepo.save(pub2);
-//
-//
-//		int sizeEnd = publicationRepo.findAllByCategorie(cat1).size();
-//
-//		assertEquals(1, sizeEnd - sizeStart);
-//
-//		System.out.println("testFindAllByCategorie Fin ###################");
-//	}
-//
-//	@Test
-//	public void findAllByPublicateur() {
-//		System.out.println("testFindAllByPublicateur Début ###################");
-//
-//		Utilisateur ut1 = new Utilisateur();
-//		ut1.setNom("mat");
-//		ut1 = compteRepo.save(ut1);
-//
-//		Utilisateur ut2 = new Utilisateur();
-//		ut2.setNom("aure");
-//		ut2 = compteRepo.save(ut2);
-//
-//		int sizeStart = publicationRepo.findAllByPublicateur(ut1).size();
-//
-//		Publication pub1 = new Publication();
-//		pub1.setNom("pub1");
-//		pub1.setPublicateur(ut1);
-//
-//		pub1 = publicationRepo.save(pub1);
-//
-//
-//		Publication pub2 = new Publication();
-//		pub2.setNom("pub2");
-//		pub2.setPublicateur(ut2);
-//
-//		pub2 = publicationRepo.save(pub2);
-//
-//
-//		int sizeEnd = publicationRepo.findAllByPublicateur(ut1).size();
-//
-//		assertEquals(1, sizeEnd - sizeStart);
-//
-//		System.out.println("testFindAllByPublicateur Fin ###################");
-//	}
-//
-//	@Test
-//	public void findByEncheres() {
-//		System.out.println("testfindByEncheres Début ###################");
-//		Publication pub1 = new Publication();
-//		pub1.setNom("pubWithPart");
-//		pub1 = publicationRepo.save(pub1);
-//		
-//		ParticipationEnchere part1 = new ParticipationEnchere();
-//		part1.setPrixProposition(6L);;
-//		part1.setPublication(pub1);
-//		part1 = participationEnchereRepo.save(part1);
-//
-//
-//
-//		Publication pub1Find = publicationRepo.findByEncheres(part1);
-//
-//		assertEquals("pubWithPart", pub1Find.getNom());
-//
-//
-//		System.out.println("testfindByEncheres Fin ###################");
-//	}
-	
 	@Test
 	public void ICompteRepo() {
 		Utilisateur ut1 = new Utilisateur();
 		ut1.setNom("mat");
 		ut1 = compteRepo.save(ut1);
+		
+		Utilisateur ut2 = new Utilisateur();
+		ut2.setNom("aure");
+		ut2 = compteRepo.save(ut2);
 		
 		Adresse adr1 = new Adresse();
 		adr1.setRue("acacias");
@@ -148,11 +59,41 @@ class CollectorProjectBootApplicationTests {
 		adr2.setPays("france");
 		adr2.setCompte(ut1);
 		adr2 = adresseRepo.save(adr2);
+		
+		Categorie cat1 = new Categorie();
+		cat1.setCategorieNom("Console");;
+		cat1 = categorieRepo.save(cat1);
+
+		Categorie cat2 = new Categorie();
+		cat2.setCategorieNom("Carte");
+		cat2 = categorieRepo.save(cat2);
+		
+		Publication pub1 = new Publication();
+		pub1.setNom("pub1");
+		pub1.setCategorie(cat1);
+		pub1.setPublicateur(ut1);
+		pub1 = publicationRepo.save(pub1);
+
+		Publication pub2 = new Publication();
+		pub2.setNom("pub2");
+		pub2.setCategorie(cat2);
+		pub1.setPublicateur(ut2);
+		pub2 = publicationRepo.save(pub2);
+		
+		ParticipationEnchere part1 = new ParticipationEnchere();
+		part1.setPrixProposition(6L);;
+		part1.setPublication(pub1);
+		part1.setUtilisateur(ut1);
+		part1 = participationEnchereRepo.save(part1);
 
 		
 		findAllByVille();
 		findAllByCodePostal();
 		findAllByCompteId();
+		findAllPublicationByCategorie();
+		findAllPublicationByPublicateur();
+		findAllEncheresByPublicationAndUtilisateur();
+		
 	}
 	
 	public void findAllByCompteId() {
@@ -183,6 +124,39 @@ class CollectorProjectBootApplicationTests {
 		assertEquals("mat", comptes.get(0).getNom());
 
 		System.out.println("testfindAllByCodePostal Fin ###################");
+	}
+	
+	@Test
+	public void findAllPublicationByCategorie() {
+		System.out.println("testFindAllByCategorie Début ###################");
+
+		List<Publication> publications = publicationRepo.findAllPublicationByCategorie(1L);
+
+		assertEquals(1L, publications.get(0).getId());
+
+		System.out.println("testFindAllByCategorie Fin ###################");
+	}
+
+	@Test
+	public void findAllPublicationByPublicateur() {
+		System.out.println("testFindAllByPublicateur Début ###################");
+
+		List<Publication> publications = publicationRepo.findAllPublicationByPublicateur(1L);
+
+		assertEquals(1L, publications.get(0).getId());
+
+		System.out.println("testFindAllByPublicateur Fin ###################");
+	}
+
+	@Test
+	public void findAllEncheresByPublicationAndUtilisateur() {
+		System.out.println("testfindByEncheres Début ###################");
+
+		List<ParticipationEnchere> participationsEncheres = participationEnchereRepo.findAllEncheresByPublicationAndUtilisateur(1L,1L);
+
+		assertEquals(1L, participationsEncheres.get(0).getId());
+
+		System.out.println("testfindByEncheres Fin ###################");
 	}
 	
 }
