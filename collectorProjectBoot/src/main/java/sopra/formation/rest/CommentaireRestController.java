@@ -2,6 +2,7 @@ package sopra.formation.rest;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -18,6 +19,8 @@ import org.springframework.web.server.ResponseStatusException;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import sopra.formation.model.Commentaire;
+import sopra.formation.model.Publication;
+import sopra.formation.model.Utilisateur;
 import sopra.formation.model.Views;
 import sopra.formation.repository.ICommentaireRepository;
 
@@ -45,6 +48,18 @@ public class CommentaireRestController {
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 		}
+	}
+	
+	@GetMapping("/{id}/utilisateur")
+	@JsonView(Views.ViewUtilisateur.class)
+	public List<Commentaire> findAllByUtilisateur(@PathVariable Utilisateur utilisateur) {
+		return commentaireRepo.findAllByUtilisateur(utilisateur);
+	}
+	
+	@GetMapping("/{id}/publication")
+	@JsonView(Views.ViewPublication.class)
+	public List<Commentaire> findAllByPublication(@PathVariable Publication publication) {
+		return commentaireRepo.findAllByPublication(publication);
 	}
 
 	@PostMapping("")

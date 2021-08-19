@@ -18,9 +18,12 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import sopra.formation.model.Adresse;
+import sopra.formation.model.Compte;
 import sopra.formation.model.Publication;
 import sopra.formation.model.Utilisateur;
 import sopra.formation.model.Views;
+import sopra.formation.repository.IAdresseRepository;
 import sopra.formation.repository.ICompteRepository;
 import sopra.formation.repository.IPublicationRepository;
 
@@ -31,6 +34,8 @@ import sopra.formation.repository.IPublicationRepository;
 public class UtilisateurRestController {
 	@Autowired
 	private ICompteRepository utilisateurRepo;
+	@Autowired
+	private IAdresseRepository adresseRepo;
 	
 	@Autowired
 	private IPublicationRepository publicationRepo;
@@ -59,6 +64,27 @@ public class UtilisateurRestController {
 	@JsonView(Views.ViewUtilisateurPublications.class)
 	public List<Publication> findAllPublication(@PathVariable Long id) {
 		return publicationRepo.findAllPublicationByPublicateur(id);
+	}
+	
+	@GetMapping("/{id}/adresses")
+	@JsonView(Views.ViewUtilisateur.class)
+	public List<Adresse> findAllByCompteId(@PathVariable Long id) {
+		List<Adresse> adresses = adresseRepo.findAllByCompteId(id);
+		return adresses;
+	}
+	
+	@GetMapping("/pays/{pays}/ville/{ville}")
+	@JsonView(Views.ViewUtilisateur.class)
+	public List<Compte> findByVille(@PathVariable String pays,@PathVariable String ville) {
+		List<Compte> utilisateurs = utilisateurRepo.findAllByVille(ville,pays);
+		return utilisateurs;
+	}
+	
+	@GetMapping("/pays/{pays}/code/{code}")
+	@JsonView(Views.ViewUtilisateur.class)
+	public List<Compte> findByCodePostal(@PathVariable String pays,@PathVariable String code) {
+		List<Compte> utilisateurs = utilisateurRepo.findAllByCodePostal(code,pays);
+		return utilisateurs;
 	}
 	
 

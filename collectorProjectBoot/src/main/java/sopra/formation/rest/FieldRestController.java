@@ -17,7 +17,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import sopra.formation.model.Commentaire;
 import sopra.formation.model.Field;
+import sopra.formation.model.Publication;
+import sopra.formation.model.Utilisateur;
 import sopra.formation.model.Views;
 import sopra.formation.repository.IFieldRepository;
 
@@ -45,6 +48,12 @@ public class FieldRestController {
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 		}
+	}
+	
+	@GetMapping("/{id}/auteur")
+	@JsonView(Views.ViewField.class)
+	public List<Field> findAllByAuteur(@PathVariable Utilisateur auteur) {
+		return fieldRepo.findAllByAuteur(auteur);
 	}
 
 	@PostMapping("")
