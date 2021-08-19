@@ -24,6 +24,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import sopra.formation.model.Commentaire;
+import sopra.formation.model.Views;
 import sopra.formation.repository.ICommentaireRepository;
 
 @RestController
@@ -54,7 +55,7 @@ public class CommentaireRestController {
 
 	@PostMapping("")
 	@JsonView(Views.ViewCommentaire.class)
-	public Commentaire create(@Valid @RequestBody Commentaire commentaire) {
+	public Commentaire create(@RequestBody Commentaire commentaire) {
 		
 		
 		commentaire = commentaireRepo.save(commentaire);

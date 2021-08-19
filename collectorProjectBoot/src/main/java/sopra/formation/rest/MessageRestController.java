@@ -23,7 +23,9 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
+import sopra.formation.model.Commentaire;
 import sopra.formation.model.Message;
+import sopra.formation.model.Views;
 import sopra.formation.repository.IMessageRepository;
 
 @RestController
@@ -54,7 +56,13 @@ public class MessageRestController {
 
 	@PostMapping("")
 	@JsonView(Views.ViewMessage.class)
-	public Message create(@Valid @RequestBody Message message) {
+	public Message create(@RequestBody Message message) {
+			
+			
+		message = messageRepo.save(message);
+
+			return message;
+		}
 
 
 	@PutMapping("/{id}")
