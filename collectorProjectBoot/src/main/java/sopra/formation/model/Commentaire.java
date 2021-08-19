@@ -16,29 +16,37 @@ import javax.persistence.Version;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 @Table(name = "Commentaire")
 public class Commentaire {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.ViewCommon.class)
 	private Long id;
 
 	@Version
+	@JsonView(Views.ViewCommon.class)
     private int version;
 	
 	@Column(name = "message")
+	@JsonView(Views.ViewCommon.class)
 	private String message;
 	
 	@Temporal(TemporalType.TIMESTAMP)
+	@JsonView(Views.ViewCommon.class)
 	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date dateCreation;
 	
 	@ManyToOne
 	@JoinColumn(name = "utilisateur_id")
+	@JsonView(Views.ViewCommentaire.class)
 	private Utilisateur utilisateur ;
 	
 	@ManyToOne
 	@JoinColumn(name = "publication_id")
+	@JsonView(Views.ViewCommentaire.class)
 	private Publication publication ;
 
 	public Long getId() {
