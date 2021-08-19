@@ -18,6 +18,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @Entity
@@ -47,6 +48,7 @@ public abstract class Compte {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "creationDate")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@JsonView(Views.ViewCommon.class)
 	private Date dateCreation;
 	

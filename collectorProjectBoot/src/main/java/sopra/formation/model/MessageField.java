@@ -12,24 +12,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 @Table(name = "MessageField")
 public class MessageField {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.ViewCommon.class)
 	private Long id;
 
 	@Version
+	@JsonView(Views.ViewCommon.class)
     private int version;
 	
 	@Column(name = "message")
+	@JsonView(Views.ViewCommon.class)
 	private String message;
 	
 	@Column
+	@JsonView(Views.ViewCommon.class)
 	private LocalDate dateCreation;
 
 	@ManyToOne
 	@JoinColumn(name = "field_id")
+	@JsonView(Views.ViewMessage.class)
 	private Field field ;
 
 
