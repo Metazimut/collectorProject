@@ -9,12 +9,15 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 
 @Entity
 @DiscriminatorValue("user")
 public class Utilisateur extends Compte {
 	
 	@Column(name = "moyenPaiement")
+	@JsonView(Views.ViewCommon.class)
 	private MoyenPaiement moyenPaiement;
 	
 	@OneToMany(mappedBy = "auteur")
