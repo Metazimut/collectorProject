@@ -14,28 +14,38 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
+
 @Entity
 @Table(name = "message")
 public class Message {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.ViewCommon.class)
 	private Long id;
 	@Version
+	@JsonView(Views.ViewCommon.class)
 	private int version;
 	
 	@Column(name = "messageTxt")
+	@JsonView(Views.ViewCommon.class)
 	private String messageTxt;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "creationDate")
+	@JsonView(Views.ViewCommon.class)
+	@JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	private Date dateCreation;
 	
 	@ManyToOne
 	@JoinColumn(name = "envoyeur_id")
+	@JsonView(Views.ViewMessage.class)
 	private Utilisateur envoyeur;
 	
 	@ManyToOne
 	@JoinColumn(name = "recepteur_id")
+	@JsonView(Views.ViewMessage.class)
 	private Utilisateur recepteur;
 
 	public Message() {
