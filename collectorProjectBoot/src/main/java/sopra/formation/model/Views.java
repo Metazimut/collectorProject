@@ -9,6 +9,8 @@ public class Views {
 
 	public static class ViewUtilisateur extends ViewCompte {}
 	
+	public static class ViewUtilisateurPublications extends ViewUtilisateur {}
+	
 	public static class ViewAdresse extends ViewCommon {}
 
 	public static class ViewPublication extends ViewCommon {}
@@ -16,6 +18,8 @@ public class Views {
 	public static class ViewParticipationEnchere extends ViewCommon {}
 	
 	public static class ViewCategorie extends ViewCommon {}
+	
+	public static class ViewCategoriePublications extends ViewCategorie {}
 	
 	public static class ViewMessageField extends ViewCommon {}
 	

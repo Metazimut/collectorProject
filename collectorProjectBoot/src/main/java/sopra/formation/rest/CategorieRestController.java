@@ -19,8 +19,10 @@ import org.springframework.web.server.ResponseStatusException;
 import com.fasterxml.jackson.annotation.JsonView;
 
 import sopra.formation.model.Categorie;
+import sopra.formation.model.Publication;
 import sopra.formation.model.Views;
 import sopra.formation.repository.ICategorieRepository;
+import sopra.formation.repository.IPublicationRepository;
 
 @RestController
 @RequestMapping("/categorie")
@@ -29,13 +31,16 @@ public class CategorieRestController {
 
 	@Autowired
 	private ICategorieRepository categorieRepo;
+	
+	@Autowired
+	private IPublicationRepository publicationRepo;
 
 	@GetMapping("")
 	@JsonView(Views.ViewCategorie.class)
 	public List<Categorie> findAll() {
 		return categorieRepo.findAll();
 	}
-
+	
 	@GetMapping("/{id}")
 	@JsonView(Views.ViewCategorie.class)
 	public Categorie find(@PathVariable Long id) {
@@ -47,6 +52,12 @@ public class CategorieRestController {
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 		}
+	}
+
+	@GetMapping("/{id}/all-publications")
+	@JsonView(Views.ViewCategoriePublications.class)
+	public List<Publication> findAllPublication(@PathVariable Long id) {
+		return publicationRepo.findAllPublicationByCategorie(id);
 	}
 
 	@PostMapping("")

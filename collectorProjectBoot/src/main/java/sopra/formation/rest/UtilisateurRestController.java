@@ -20,10 +20,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 import sopra.formation.model.Adresse;
 import sopra.formation.model.Compte;
+import sopra.formation.model.Publication;
 import sopra.formation.model.Utilisateur;
 import sopra.formation.model.Views;
 import sopra.formation.repository.IAdresseRepository;
 import sopra.formation.repository.ICompteRepository;
+import sopra.formation.repository.IPublicationRepository;
 
 
 @RestController
@@ -34,6 +36,9 @@ public class UtilisateurRestController {
 	private ICompteRepository utilisateurRepo;
 	@Autowired
 	private IAdresseRepository adresseRepo;
+	
+	@Autowired
+	private IPublicationRepository publicationRepo;
 
 	@GetMapping("")
 	@JsonView(Views.ViewUtilisateur.class)
@@ -53,6 +58,12 @@ public class UtilisateurRestController {
 		} else {
 			throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Unable to find resource");
 		}
+	}
+	
+	@GetMapping("/{id}/all-publications")
+	@JsonView(Views.ViewUtilisateurPublications.class)
+	public List<Publication> findAllPublication(@PathVariable Long id) {
+		return publicationRepo.findAllPublicationByPublicateur(id);
 	}
 	
 	@GetMapping("/{id}/adresses")

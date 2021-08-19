@@ -115,8 +115,6 @@ public class PublicationRepositorySpringTest {
 		part1.setPublication(pub1);
 		part1 = participationEnchereRepo.save(part1);
 
-
-
 		Publication pub1Find = publicationRepo.findByEncheres(part1);
 
 		Assert.assertEquals("pubWithPart", pub1Find.getNom());
