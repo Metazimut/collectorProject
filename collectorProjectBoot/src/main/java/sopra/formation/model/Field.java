@@ -14,6 +14,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonView;
+
 
 @Entity
 @Table(name = "Field")
@@ -21,16 +23,20 @@ public class Field {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@JsonView(Views.ViewCommon.class)
 	private Long id;
 
 	@Version
+	@JsonView(Views.ViewCommon.class)
     private int version;
 	
 	@Column(name = "categorie", length = 100)
+	@JsonView(Views.ViewCommon.class)
 	private String categorie;
 
 	@ManyToOne
 	@JoinColumn(name = "auteur_id")
+	@JsonView(Views.ViewField.class)
 	private Utilisateur auteur ;
 
 	@OneToMany(mappedBy = "field")
