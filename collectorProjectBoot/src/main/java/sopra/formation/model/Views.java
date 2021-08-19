@@ -17,4 +17,6 @@ public class Views {
 	
 	public static class ViewCategorie extends ViewCommon {}
 	
+	public static class ViewMessageField extends ViewCommon {}
+	
 }
