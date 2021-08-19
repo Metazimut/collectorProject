@@ -19,4 +19,11 @@ public class Views {
 	
 	public static class ViewMessageField extends ViewCommon {}
 	
+	public static class ViewField extends ViewCommon {}
+	
+	public static class ViewMessage extends ViewCommon {}
+
+	public static class ViewCommentaire extends ViewCommon {}
+
+	
 }
