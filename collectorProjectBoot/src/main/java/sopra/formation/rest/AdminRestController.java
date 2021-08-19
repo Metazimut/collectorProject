@@ -18,7 +18,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
-
+import sopra.formation.model.Compte;
 import sopra.formation.model.Admin;
 import sopra.formation.model.Views;
 import sopra.formation.repository.ICompteRepository;

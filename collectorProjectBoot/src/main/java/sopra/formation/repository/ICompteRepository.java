@@ -26,13 +26,13 @@ public interface ICompteRepository extends JpaRepository<Compte, Long> {
 	@Query("select u from Utilisateur u where u.id = :id")
 	Optional<Utilisateur> findUtilisateurById(@Param("id") Long id);
 	
-	Utilisateur findByEncheres(ParticipationEnchere enchere);
-	Utilisateur findByPublications(Publication publication);
-	Utilisateur findByCommentaires(Commentaire commentaire);
+//	Utilisateur findByEncheres(ParticipationEnchere enchere);
+//	Utilisateur findByPublications(Publication publication);
+//	Utilisateur findByCommentaires(Commentaire commentaire);
 	
-	@Query("select c from Compte c join Adresse a where a.ville = :ville and a.pays = :pays")
+	@Query("select distinct c from Compte c left join fetch c.adresses a where a.ville = :ville and a.pays = :pays")
 	List<Compte> findAllByVille(@Param("ville") String ville, @Param("pays") String pays);
 	
-	@Query("select c from Compte c join Adresse a where a.codePostal = :codePostal and a.pays = :pays")
+	@Query("select distinct c from Compte c left join fetch c.adresses a where a.codePostal = :codePostal and a.pays = :pays")
 	List<Compte> findAllByCodePostal(@Param("codePostal") String codePostal, @Param("pays") String pays);
 }
